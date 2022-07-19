@@ -7,7 +7,7 @@ public:
         string s=to_string(n);
         // int sz=s.size();
         int i;
-        for(i=s.size()-2;i>=0;i--)
+        for(i=s.size()-2;i>=0;i--) //O(n)
         {
             if(s[i]<s[i+1]) 
             {
@@ -18,7 +18,7 @@ public:
         }
         if(i<=-1) return -1;
         
-        for(int j=s.size()-1;j>=0;j--)
+        for(int j=s.size()-1;j>=0;j--) 
         {
             if(s[j]>s[i]) 
             {
@@ -28,8 +28,21 @@ public:
         }
         
         
-        reverse(s.begin()+i+1,s.end());
+        reverse(s.begin()+i+1,s.end()); //O(n)
         if( stol(s) >INT_MAX) return -1;
         return stoi(s);
     }
 };
+
+// Tc: O(n)
+
+// ********************************************************************************************
+
+// Time complexity of next_permutation is O(n)
+
+int nextGreaterElement(int n) {
+    auto digits = to_string(n);
+    next_permutation(begin(digits), end(digits));
+    auto res = stoll(digits);
+    return (res > INT_MAX || res <= n) ? -1 : res;
+}

@@ -1,0 +1,35 @@
+//https://leetcode.com/problems/next-greater-element-iii/
+
+class Solution {
+public:
+    int nextGreaterElement(int n) {
+        
+        string s=to_string(n);
+        // int sz=s.size();
+        int i;
+        for(i=s.size()-2;i>=0;i--)
+        {
+            if(s[i]<s[i+1]) 
+            {
+               // cout<<s[i]<<endl;
+                break;
+            }
+           
+        }
+        if(i<=-1) return -1;
+        
+        for(int j=s.size()-1;j>=0;j--)
+        {
+            if(s[j]>s[i]) 
+            {
+                swap(s[j],s[i]);
+                break;
+            }
+        }
+        
+        
+        reverse(s.begin()+i+1,s.end());
+        if( stol(s) >INT_MAX) return -1;
+        return stoi(s);
+    }
+};

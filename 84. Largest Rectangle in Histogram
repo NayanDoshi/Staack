@@ -1,0 +1,70 @@
+//https://leetcode.com/problems/largest-rectangle-in-histogram/
+
+// Step 1st find NSL 
+// Step 2 Find NSR
+// Step 3 Find Width
+// Step 4 find area
+
+
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        
+        vector<int>NSL;
+        stack<int>s;
+        int pseudoIdx=-1;
+        
+        for(int i=0;i<heights.size();i++)
+        {
+            if(s.empty()) NSL.push_back(pseudoIdx);
+            else
+            {
+                while(!s.empty() && heights[s.top()]>=heights[i]) s.pop();
+                
+                if(s.empty()) NSL.push_back(pseudoIdx);
+                else 
+                {
+                    NSL.push_back(s.top());
+                }
+            }
+            s.push(i);
+        }
+        
+        while(!s.empty()) s.pop();
+        vector<int>NSR;
+        pseudoIdx=heights.size();
+        for(int i=heights.size()-1;i>=0;i--)
+        {
+            if(s.empty()) NSR.push_back(pseudoIdx);
+            else
+            {
+                while(!s.empty() && heights[s.top()]>=heights[i]) s.pop();
+                
+                if(s.empty()) NSR.push_back(pseudoIdx);
+                else 
+                {
+                    NSR.push_back(s.top());
+                }
+            }
+            s.push(i);
+        }
+        
+        reverse(NSR.begin(),NSR.end());
+        
+        int n=heights.size();
+        vector<int>width;
+        
+        for(int i=0;i<heights.size();i++)
+        {
+           width.push_back(NSR[i]-NSL[i]-1);
+            // cout<<NSR[i]<<" ";
+        }
+        int area=0;
+        for(int i=0;i<heights.size();i++)
+        {
+            area=max(area,heights[i]*width[i]);
+        }
+        
+        return area;
+    }
+};

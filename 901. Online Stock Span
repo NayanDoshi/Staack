@@ -1,0 +1,45 @@
+// Similar to nearest greater to left......
+//https://leetcode.com/problems/online-stock-span/
+
+class StockSpanner {
+public:
+    
+    vector<int>v;
+    stack<int>s;
+    StockSpanner() {
+        
+        
+    }
+    
+    int next(int price) {
+        
+        if(s.empty())
+        {
+            s.push(v.size());
+            v.push_back(price);
+            return 1;
+        }
+        else
+        {
+            //cout<<"inside"<<endl;
+            while(!s.empty() && v[s.top()]<=price) s.pop();
+            
+            if(s.empty())
+            {
+                s.push(v.size());
+                v.push_back(price);
+                return v.size();
+            } 
+            else
+            {
+                 
+                    int idx=s.top();
+                    s.push(v.size());
+                    v.push_back(price);
+                return s.top()-idx;
+                
+            }
+            
+        }
+    }
+};
